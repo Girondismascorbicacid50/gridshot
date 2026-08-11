@@ -243,3 +243,8 @@ Still gated on real evidence:
 - Production matcher thresholds selected and validated on a representative GridShot capture corpus
 - Published first-print-fit and recapture-rate claims
 
+## License
+
+GridShot is licensed under the [PolyForm Noncommercial License 1.0.0](LICENSE.md)
+for personal and other noncommercial use. Commercial use, commercial services, and
+commercial products require a separate written license from the copyright holder.
