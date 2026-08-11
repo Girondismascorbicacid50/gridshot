@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Run the gridshot CLI inside the app container — nothing installed on the host.
+set -euo pipefail
+cd "$(dirname "$(readlink -f "$0")")/.."
+exec docker compose run --rm cli gridshot "$@"

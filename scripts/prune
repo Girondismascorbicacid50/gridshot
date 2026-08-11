@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# Prune old capture projects — the photos in projects/ are the storage bloat.
+# Tools you've saved to the library keep their OWN copy of the geometry, so
+# deleting the source capture is safe: composing and exporting still work.
+#
+# Usage:
+#   scripts/prune [days]          # preview + confirm; default older-than 14 days
+#   scripts/prune 30 --dry-run    # just show what would go
+#   scripts/prune 7 --yes         # no prompt (for cron)
+set -euo pipefail
+cd "$(dirname "$(readlink -f "$0")")/.."
+
+DAYS=14
+DRY=0
+YES=0
+for arg in "$@"; do
+  case "$arg" in
+    --dry-run|-n) DRY=1 ;;
+    --yes|-y) YES=1 ;;
+    *[!0-9]*|'') : ;;   # ignore non-numeric args
+    *) DAYS="$arg" ;;
+  esac
+done
+
+[ -d projects ] || { echo "no projects/ directory."; exit 0; }
+
+mapfile -t OLD < <(find projects -mindepth 1 -maxdepth 1 -type d -mtime +"$DAYS" | sort)
+if [ "${#OLD[@]}" -eq 0 ]; then
+  echo "no captures older than ${DAYS} days."
+  exit 0
+fi
+
+echo "captures older than ${DAYS} days:"
+for d in "${OLD[@]}"; do
+  printf "  %-7s %s\n" "$(du -sh "$d" | cut -f1)" "$(basename "$d")"
+done
+TOTAL=$(du -sch "${OLD[@]}" | tail -1 | cut -f1)
+
+if [ "$DRY" -eq 1 ]; then
+  echo "(dry run) would free ${TOTAL} — drop --dry-run to delete."
+  exit 0
+fi
+
+if [ "$YES" -ne 1 ]; then
+  read -rp "delete these ${#OLD[@]} captures (frees ${TOTAL})? [y/N] " ans
+  [[ "$ans" =~ ^[Yy]$ ]] || { echo "aborted."; exit 0; }
+fi
+
+rm -rf "${OLD[@]}"
+echo "removed ${#OLD[@]} captures, freed ${TOTAL}."

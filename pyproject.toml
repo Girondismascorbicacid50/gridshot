@@ -1,0 +1,38 @@
+[project]
+name = "gridshot"
+version = "0.1.0"
+description = "Phone photo → dimensionally accurate Gridfinity tool-cutout bins"
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=2.0",
+    "opencv-python-headless>=4.9",
+    "shapely>=2.0.7",
+    "pillow>=10.3",
+    "pillow-heif>=0.16",
+    "img2pdf>=0.5",
+    "pydantic>=2.7",
+    "typer>=0.12",
+    "manifold3d>=3.0",
+    "trimesh>=4.0",
+    "scipy>=1.13",
+    "onnxruntime>=1.18",
+]
+
+[project.optional-dependencies]
+server = [
+    "fastapi>=0.110",
+    "uvicorn>=0.29",
+    "httpx>=0.27",
+    "python-multipart>=0.0.9",
+]
+
+[project.scripts]
+gridshot = "gridshot.cli.main:app"
+
+[build-system]
+requires = ["hatchling==1.27.0"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["gridshot"]
+

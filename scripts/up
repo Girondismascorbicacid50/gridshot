@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# Bring up the GridShot stack, optionally exposing it over HTTPS on the tailnet.
+set -euo pipefail
+
+usage() {
+    cat <<'EOF'
+Usage: scripts/up [--no-tailscale]
+
+Build and start the GridShot web and segmentation services.
+
+Options:
+  --no-tailscale  Skip Tailscale Serve configuration; use localhost only.
+  -h, --help      Show this help message.
+EOF
+}
+
+use_tailscale=true
+while (($#)); do
+    case "$1" in
+        --no-tailscale)
+            use_tailscale=false
+            ;;
+        -h|--help)
+            usage
+            exit 0
+            ;;
+        *)
+            echo "Unknown option: $1" >&2
+            usage >&2
+            exit 2
+            ;;
+    esac
+    shift
+done
+
+cd "$(dirname "$(readlink -f "$0")")/.."
+
+mkdir -p config projects
+docker compose up -d --build segserver web
+
+echo
+echo "GridShot is up:"
+if "$use_tailscale"; then
+    # Publish at https://<this-host>.<tailnet>.ts.net (valid cert, tailnet-only).
+    tailscale serve --bg 8800
+    tailscale serve status 2>/dev/null | sed -n '1p' || true
+else
+    echo "  Tailscale configuration skipped (--no-tailscale)"
+fi
+echo "  local:  http://localhost:8800"

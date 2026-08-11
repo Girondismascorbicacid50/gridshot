@@ -1,0 +1,61 @@
+name: gridshot
+
+services:
+  cli:
+    build:
+      context: .
+      dockerfile: docker/app.Dockerfile
+    image: gridshot-app
+    user: "1000:1000"
+    working_dir: /app
+    environment:
+      HOME: /tmp
+      GRIDSHOT_CONFIG_DIR: /app/config
+      HF_TOKEN: ${HF_TOKEN:-}
+      GRIDSHOT_SEGSERVER_URL: http://segserver:8801
+    volumes:
+      - .:/app
+
+  web:
+    build:
+      context: .
+      dockerfile: docker/web.Dockerfile
+    image: gridshot-web
+    user: "1000:1000"
+    working_dir: /app
+    environment:
+      HOME: /tmp
+      GRIDSHOT_CONFIG_DIR: /app/config
+      GRIDSHOT_SEGSERVER_URL: http://segserver:8801
+    ports:
+      - "127.0.0.1:8800:8800"  # localhost only; tailscale serve fronts HTTPS
+    volumes:
+      - ./projects:/app/projects
+      - ./config:/app/config
+
+
+  segserver:
+    build:
+      context: .
+      dockerfile: docker/segserver.Dockerfile
+    image: gridshot-segserver
+    user: "1000:1000"
+    working_dir: /app
+    environment:
+      HOME: /tmp
+      HF_TOKEN: ${HF_TOKEN:-}
+      HF_HOME: /app/config/cache/hf
+      TORCH_HOME: /app/config/cache/torch
+      GRIDSHOT_SAM: ${GRIDSHOT_SAM:-sam2}
+      GRIDSHOT_INFERENCE_QUEUE_SIZE: ${GRIDSHOT_INFERENCE_QUEUE_SIZE:-2}
+    expose:
+      - "8801"  # compose network only; web/cli are the public boundary
+    volumes:
+      - ./config:/app/config
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: cdi
+              capabilities: [gpu]
+              device_ids: ["${GRIDSHOT_GPU_DEVICE:-nvidia.com/gpu=0}"]

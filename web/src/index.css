@@ -1,0 +1,147 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --c-paper: #e9e3d3;
+  --c-field: #17191c;
+  --c-navy: #243049;
+  --c-knockout: #f3efe4;
+  --c-teal: #246e72;
+  --c-orange: #c8531e;
+  --c-line: #b9b19c;
+}
+
+@layer base {
+  body {
+    @apply bg-paper text-field font-body;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  *:focus-visible {
+    outline: 2px solid theme("colors.orange");
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  /* the two-tone letterspaced title device */
+  .titledev {
+    @apply font-display font-bold uppercase inline-flex items-center gap-2;
+    letter-spacing: 0.06em;
+  }
+  /* mono spec line — the instrument voice */
+  .specline {
+    @apply font-mono text-xs uppercase text-muted;
+    letter-spacing: 0.18em;
+  }
+  .grp-label {
+    @apply font-mono text-xs uppercase text-teal;
+    letter-spacing: 0.18em;
+  }
+  /* primary button: mono, offset-ink hover (a second pass out of register) */
+  .btn {
+    @apply font-mono font-medium text-sm uppercase px-6 py-3 border-[1.5px]
+      border-field bg-field text-knockout cursor-pointer inline-block;
+    letter-spacing: 0.12em;
+    border-radius: 2px;
+    transition: transform 0.12s, box-shadow 0.15s;
+  }
+  .btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 theme("colors.teal");
+  }
+  .btn-primary {
+    @apply bg-teal border-teal text-knockout;
+  }
+  .btn-primary:hover {
+    box-shadow: 4px 4px 0 theme("colors.field");
+  }
+  .btn-ghost {
+    @apply bg-transparent text-field;
+  }
+  .btn-ghost:hover {
+    box-shadow: 4px 4px 0 theme("colors.teal");
+  }
+  .btn:disabled {
+    @apply opacity-40 cursor-not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+  /* outlined mono status badge with leading dot */
+  .badge {
+    @apply font-mono text-xs uppercase inline-flex items-center gap-2 px-2 py-1
+      border border-line;
+    letter-spacing: 0.14em;
+    border-radius: 2px;
+  }
+  .badge::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 9999px;
+    background: currentColor;
+  }
+  /* mono key/value data table */
+  .dtable {
+    @apply font-mono text-xs w-full;
+    border-collapse: collapse;
+  }
+  .dtable td {
+    @apply py-[6px] border-b border-line uppercase;
+    letter-spacing: 0.06em;
+  }
+  .dtable td:last-child {
+    @apply text-right text-muted;
+  }
+  .panel {
+    @apply border border-line bg-paper p-8;
+    border-radius: 2px;
+  }
+  .mono-input {
+    @apply font-mono text-base w-full bg-paper-2 border border-line px-3 py-2 text-field;
+    border-radius: 2px;
+  }
+  .mono-input:focus {
+    @apply border-teal bg-paper;
+  }
+  .app-nav {
+    @apply sticky top-0 z-40 border-b border-line bg-paper;
+  }
+  .app-nav-inner {
+    @apply mx-auto flex max-w-container flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3 sm:px-6;
+  }
+  .app-nav-brand {
+    @apply inline-flex shrink-0 items-center gap-1 font-display text-sm font-bold uppercase text-field;
+    letter-spacing: 0.08em;
+  }
+  .app-nav-brand span:first-child {
+    @apply text-teal;
+  }
+  .app-nav-brand span:nth-child(2) {
+    @apply text-muted;
+  }
+  .app-nav-links {
+    @apply flex min-w-0 flex-1 items-center gap-1 overflow-x-auto;
+  }
+  .app-nav-link {
+    @apply shrink-0 border-b-2 border-transparent px-3 py-2 font-mono text-[11px] uppercase text-muted;
+    letter-spacing: 0.1em;
+  }
+  .app-nav-link:hover {
+    @apply text-field;
+  }
+  .app-nav-link[aria-current="page"] {
+    @apply border-teal text-teal;
+  }
+  .app-nav-link:disabled {
+    @apply cursor-wait opacity-50;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
