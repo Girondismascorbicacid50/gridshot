@@ -103,12 +103,25 @@ GRIDSHOT_GPU_DEVICE=nvidia.com/gpu=1 scripts/up --no-tailscale
 
 ### 1. Create and verify a calibration mat
 
+Ready-to-print calibration mats are included for each supported paper size:
+
+| Paper | Mat ID | Download |
+| --- | --- | --- |
+| A4 | `a4-7x9-5c8f11` | [PDF](calibration-mats/gridshot-mat-a4-7x9-5c8f11.pdf) |
+| A3 | `a3-10x14-030735` | [PDF](calibration-mats/gridshot-mat-a3-10x14-030735.pdf) |
+| US Letter | `letter-7x9-7dd4fa` | [PDF](calibration-mats/gridshot-mat-letter-7x9-7dd4fa.pdf) |
+
+Register the selected board in your local GridShot configuration before verifying
+it. This also generates the same board in the ignored `mats/` runtime directory:
+
 ```bash
 scripts/gridshot mat new --paper a4
 scripts/gridshot mat verify <mat-id> --measured-x <mm> --measured-y <mm>
 ```
 
-Print the generated mat at **100% / Actual Size**. Measure the marked X and Y spans
+Replace `a4` with `a3` or `letter` when using another bundled size.
+
+Print the selected mat at **100% / Actual Size**. Measure the marked X and Y spans
 with calipers and record both values. An unverified mat cannot be used for capture.
 
 ### 2. Start GridShot
